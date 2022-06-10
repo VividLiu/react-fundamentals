@@ -20,9 +20,16 @@
 
 <html>
     <body>
-        <div id = 'root'>root</div>
     </body>
     <script type="module">
+        //create root
+        // const body = document.getElementsByTagName('body');
+        const rootNode = document.createElement('div');
+        // rootNode.setAttribute('id', 'root');
+        rootNode.id='root';
+        document.body.appendChild(rootNode);
+
+        //create text
         const rootDom = document.getElementById('root');
         const textNode = document.createElement('div');
         const text = document.createTextNode('Hello Word!');
