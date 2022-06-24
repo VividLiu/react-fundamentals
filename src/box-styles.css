@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  font-style: italic;
 }
 .box--large {
   width: 270px;
@@ -16,4 +17,16 @@
 .box--small {
   width: 90px;
   height: 90px;
+}
+
+.bg-orange {
+  background-color:orange;
+}
+
+.bg-pink {
+  background-color: pink;
+}
+
+.bg-blue { 
+  background-color: lightblue;
 }

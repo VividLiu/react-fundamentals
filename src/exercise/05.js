@@ -2,6 +2,7 @@
 // http://localhost:3000/isolated/exercise/05.js
 
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import '../box-styles.css'
 
 // 🐨 add a className prop to each div and apply the correct class names
@@ -14,16 +15,47 @@ import '../box-styles.css'
 // 🐨 also use the style prop to make the font italic
 // 💰 Here are available style attributes: backgroundColor, fontStyle
 
-const smallBox = <div>small lightblue box</div>
-const mediumBox = <div>medium pink box</div>
-const largeBox = <div>large orange box</div>
+const smallBox = (
+  <div className="box box--small bg-blue">small lightblue box</div>
+)
+const mediumBox = <div className="box box--medium bg-pink">medium pink box</div>
+const largeBox = (
+  <div className="box box--large bg-orange">large orange box</div>
+)
+
+/*Extra credit */
+const Box = ({size, style, children}) => {
+  const sizeClass = `box--${size}`
+
+  return (
+    <div className={`box ${sizeClass}`} style={style}>
+      {children}
+    </div>
+  )
+}
+
+Box.propTypes = {
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+}
 
 function App() {
   return (
     <div>
-      {smallBox}
+      {/* {smallBox}
       {mediumBox}
-      {largeBox}
+      {largeBox} */}
+      <Box size="small" style={{backgroundColor: 'lightblue'}}>
+        small lightblue box
+      </Box>
+      <Box size="medium" style={{backgroundColor: 'pink'}}>
+        medium pink box
+      </Box>
+      <Box size="large" style={{backgroundColor: 'orange'}}>
+        large orange box
+      </Box>
+      <Box size="extraLarge" style={{backgroundColor: 'orange'}}>
+        wrong type
+      </Box>
     </div>
   )
 }
