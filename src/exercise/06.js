@@ -1,11 +1,12 @@
 // Basic Forms
 // http://localhost:3000/isolated/exercise/06.js
 
-import React, {useRef, useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 function UsernameForm({onSubmitUsername}) {
+  const [value, setValue] = useState('')
   const [error, setError] = useState('')
-  const inputRef = useRef()
+  const [hidden, setHidden] = useState(true)
 
   console.log('onSubmitHandler reference: ', onSubmitUsername)
 
@@ -25,28 +26,43 @@ function UsernameForm({onSubmitUsername}) {
   // 🐨 make sure to associate the label to the input.
   // to do so, set the value of 'htmlFor' prop of the label to the id of input
   const onSubmit = event => {
-    onSubmitUsername(inputRef.current.value)
+    onSubmitUsername(value)
     event.preventDefault()
   }
 
   const onChange = event => {
     const {value} = event.target
 
-    const isValid = value === value.toLowerCase()
+    const isValid = !value || value === value.toLowerCase()
 
     setError(isValid ? '' : 'Must enter lowercase!')
+    setValue(value ? value.toLowerCase() : '')
+    if (!isValid) {
+      setHidden(false)
+    }
   }
+
+  useEffect(() => {
+    if (!hidden) {
+      const timer = setTimeout(() => {
+        clearTimeout(timer)
+        setHidden(true)
+      }, 500)
+    }
+  }, [hidden])
 
   return (
     <form onSubmit={onSubmit}>
       <div>
         <label id="username">Username:</label>
-        <input type="text" ref={inputRef} onChange={onChange} />
+        <input type="text" onChange={onChange} value={value} />
       </div>
       <button type="submit" disabled={error !== ''}>
         Submit
       </button>
-      <div style={{color: 'red'}}>{error}</div>
+      <div style={{color: 'red'}} hidden={hidden}>
+        {error}
+      </div>
     </form>
   )
 }
