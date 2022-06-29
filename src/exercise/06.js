@@ -1,9 +1,11 @@
 // Basic Forms
 // http://localhost:3000/isolated/exercise/06.js
 
-import * as React from 'react'
+import React, {useCallback} from 'react'
 
 function UsernameForm({onSubmitUsername}) {
+  console.log('onSubmitHandler reference: ', onSubmitUsername)
+
   // 🐨 add a submit event handler here (`handleSubmit`).
   // 💰 Make sure to accept the `event` as an argument and call
   // `event.preventDefault()` to prevent the default behavior of form submit
@@ -20,20 +22,23 @@ function UsernameForm({onSubmitUsername}) {
   // 🐨 make sure to associate the label to the input.
   // to do so, set the value of 'htmlFor' prop of the label to the id of input
   return (
-    <form>
+    <form onSubmit={onSubmitUsername}>
       <div>
-        <label>Username:</label>
+        <label id="username">Username:</label>
         <input type="text" />
       </div>
-      <button type="submit" onSubmit={onSubmitUsername}>
-        Submit
-      </button>
+      <button type="submit">Submit</button>
     </form>
   )
 }
 
 function App() {
-  const onSubmitUsername = username => alert(`You entered: ${username}`)
+  // const onSubmitUsername = username => ()
+  const onSubmitUsername = event => {
+    alert(`You entered: ${event.target.elements[0].value}`)
+
+    event.preventDefault()
+  }
   return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
 
